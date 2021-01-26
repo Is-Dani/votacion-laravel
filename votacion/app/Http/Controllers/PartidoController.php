@@ -29,7 +29,7 @@ class PartidoController extends Controller
      */
     public function create()
     {
-        //
+        return view("partidos.create");
     }
 
     /**
@@ -40,7 +40,7 @@ class PartidoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
