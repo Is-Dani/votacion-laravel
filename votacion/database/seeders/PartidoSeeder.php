@@ -15,7 +15,7 @@ class PartidoSeeder extends Seeder
     public function run()
     {
         Partido::factory()
-            ->count(12)
+            ->count(120)
             
             ->create();
     }

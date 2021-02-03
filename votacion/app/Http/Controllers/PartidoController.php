@@ -29,7 +29,7 @@ class PartidoController extends Controller
      */
     public function create()
     {
-        return view("partidos.create");
+        return view("partido.create");
     }
 
     /**
@@ -40,7 +40,15 @@ class PartidoController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $input = $request->all();
+        // echo $input;
+        Partido::create([
+            'nombre' => $input['nombre'],
+            'sigla' => $input['sigla'],
+            'representante' => $input['representante'],
+        ]);
+
+        return view("mensaje")->withMensaje("se registro con exito"); 
     }
 
     /**
@@ -51,7 +59,7 @@ class PartidoController extends Controller
      */
     public function show(Partido $partido)
     {
-        //
+        return view("partido.show")->withPartido($partido)
     }
 
     /**
@@ -62,7 +70,7 @@ class PartidoController extends Controller
      */
     public function edit(Partido $partido)
     {
-        //
+        return view("partido.edit")->withPartido($partido);
     }
 
     /**
@@ -74,7 +82,18 @@ class PartidoController extends Controller
      */
     public function update(Request $request, Partido $partido)
     {
-        //
+        $input = $request->all();
+
+        $partido->nombre = $input['nombre'];
+        $partido->sigla = $input['sigla'];
+        $partido->representante = $input['representante'];
+
+        if ($partido->save()) {
+            return view("mensaje")->withMensaje("se actualizo con exito"); 
+        }
+
+        abort(500, 'update cargo failed');
+       
     }
 
     /**
@@ -85,6 +104,10 @@ class PartidoController extends Controller
      */
     public function destroy(Partido $partido)
     {
-        //
+        if ($partido->delete())
+        {
+            return view("mensaje")->withMensaje("se elimino con exito"); 
+        }
+        abort(500, 'destroy cargo failed');
     }
 }
